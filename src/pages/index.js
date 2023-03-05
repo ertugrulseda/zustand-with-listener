@@ -4,8 +4,8 @@ import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { userStore } from 'store/userStore'
 import { useEffect, useState } from 'react'
-import  Logout  from '../components/Logout'
-
+import Logout from '../components/Logout'
+import Link from 'next/link'
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -13,14 +13,14 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   //const store = userStore();   1. çözüm  
-  const userNameSetter = userStore(state=>state.setUserName); //2. çözüm tek tek store'da lazım olanları çekmek
-  const userPassSetter = userStore(state=>state.setUserPass);
-  const isAuthenticatedSetter = userStore(state=>state.isAuthenticated);
-  const login = userStore(state=>state.login);
+  const userNameSetter = userStore(state => state.setUserName); //2. çözüm tek tek store'da lazım olanları çekmek
+  const userPassSetter = userStore(state => state.setUserPass);
+  const isAuthenticatedSetter = userStore(state => state.isAuthenticated);
+  const login = userStore(state => state.login);
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsAuthenticated(isAuthenticatedSetter);
-    
+
   }, [isAuthenticatedSetter])
 
 
@@ -45,10 +45,10 @@ export default function Home() {
     //store.setUserName(userName);
     //store.setUserPass(pass);
     //store.login();
- 
-     userNameSetter(userName);    //2. çözüm de sadece bana lazım olanları storedan çekip setlemek
-     userPassSetter(pass);
-     login();
+
+    userNameSetter(userName);    //2. çözüm de sadece bana lazım olanları storedan çekip setlemek
+    userPassSetter(pass);
+    login();
   }
 
 
@@ -71,8 +71,12 @@ export default function Home() {
           <input onChange={(e) => { setpass(e.target.value) }} className={styles.input} type="password" id="pass" name="password" minLength="8" required />
         </div>
         <button className={styles.button} onClick={onClick}>login</button>
-        <Logout/>
+        <Logout />
         <div>{isAuthenticated ? "bizden" : "kim bu"}</div>
+        <div>
+          <Link href="/oylebircomp">Öylesine tıkla</Link>
+        </div>
+
       </main>
     </>
   )
